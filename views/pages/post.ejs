@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html class="dark" lang="id">
+  <head>
+    <%- include("../template/head", {title: "Secreto"}); %>
+  </head>
+
+  <body  class="overflow-x-hidden dark:bg-slate-700">
+    <div class="container mx-auto px-3">
+      <div class="w-full flex justify-center">
+        <h1 class="mb-8 mt-3 text-dark text-3xl font-semibold dark:text-white">Secreto KW</h1>
+      </div>
+      <div class="my-3 shadow-lg dark:shadow-xl">
+        <div class="px-4 py-4 rounded-lg dark:bg-slate-800">
+          <h1 class="text-xl text-dark dark:text-white mb-4 -mt-1">Tulis Pesan Untuk <%= author %> Secara Anonim</h1>
+          <form class="ml-1" action="/add_msg" method="get" id="create_message_form">
+            <input type="hidden" name="post_id" value="<%= p_id %>" />
+             <input type="text" name="message" id="message" class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-1.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Tulis Pesan Disini..*" required />
+            <div class="flex justify-end">
+              <button class="w-full py-1.5 bg-blue-500 rounded shadow-sm text-dark dark:text-white mt-2 hover:bg-blue-600" id="create_thread_submit" type="submit">KIRIM</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <% messages.forEach(function(el) {%>
+      <%- include("../partials/message-card", el) %>  
+      <% }) %>
+    </div>
+  </body>
+</html>
