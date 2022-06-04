@@ -23,12 +23,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/assets", express.static("./assets"));
 
-app.get("/", function (req, res) {
+app.get("/", function (req: any, res: any) {
   res.status(200);
   res.render("pages/home");
 });
 
-app.get("/add_post", function (req, res) {
+app.get("/add_post", function (req: any, res: any) {
   res.status(200);
   const { author } = req.query;
   const id = "01234567456";
@@ -41,14 +41,14 @@ app.get("/add_post", function (req, res) {
     messages: [],
   };
   writeFileSync(p_post, JSON.stringify(template, null, 2));
-  res.render("template/redirecter", { path: `/post/${p_id}` });
+  res.redirect(`/post/${p_id}`);
 });
 
-app.get("/add_msg", function (req, res, next) {
+app.get("/add_msg", function (req: any, res: any) {
   res.status(200);
   const { post_id, message: text } = req.query;
   if (!existsSync(`./db/post_${post_id}.json`)) {
-    res.render("template/redirecter", { path: "/" });
+    res.redirect("/");
   }
   const id = "asd312213";
   const msg_id = `post_${post_id}__msg-${id}_${Date.now()}`;
@@ -58,14 +58,14 @@ app.get("/add_msg", function (req, res, next) {
     `./db/post_${post_id}.json`,
     JSON.stringify(data_post, null, 2)
   );
-  res.render("template/redirecter", { path: `/post/${post_id}` });
+  res.redirect(`/post/${post_id}`);
 });
 
-app.get("/post/:id", function (req, res) {
+app.get("/post/:id", function (req: any, res: any) {
   res.status(200);
   const { id } = req.params;
   if (!existsSync(`./db/post_${id}.json`)) {
-    return res.render("template/redirecter", { path: "/" });
+    return res.redirect("/");
   }
   const {
     id: p_id,
